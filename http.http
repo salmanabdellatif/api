@@ -1,0 +1,52 @@
+@url  = http://localhost:3000
+
+
+### Rrgister
+POST {{url}}/users/register
+content-type: application/json
+
+{"username":"salman_mo","password":"123456","name":"salman"}
+
+
+### login
+POST {{url}}/users/login
+content-type: application/json
+token:0
+
+{"username":"salman_mo","password":"123456","name":"salman"}
+
+
+###Me
+GET {{url}}/users/me
+token: 0
+
+
+###create posts
+POST {{url}}/posts
+Content-Type: application/json
+token:0
+
+{"title": "created post", "content":"created content"}
+
+
+###edit posts
+PUT  {{url}}/posts/0
+Content-Type: application/json
+token: 0
+
+{"title": "test post-edit-", "content":"post one-edit-"}
+
+
+###delete posts
+DELETE {{url}}/posts/0
+token:0
+
+
+###get posts list
+GET {{url}}/posts
+token:0
+
+
+###get post by id
+GET {{url}}/posts/0
+token:0

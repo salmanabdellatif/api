@@ -1,11 +1,19 @@
-const express = require('express')
+const express = require('express');
+const fs = require('fs');
+const db = require('./utils/db');
 
-const app = express()
+db.set();
 
-app.get('/', (req, res) => {
-  res.end('hello server')
-})
+const { resolveToken } = require('./utils/tokenMiddleware.js');
 
-app.listen(3000, () => {
-  console.log('server listening on port 3000...')
-})
+const users = require('./controllers/users.js');
+const posts = require('./controllers/posts.js');
+
+const app = express();
+const { Router } = express;
+
+app.use(express.json());
+app.use('/users', users(new Router()));
+app.use('/posts', resolveToken, posts(new Router()));
+
+module.exports = app;
