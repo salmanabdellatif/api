@@ -1,5 +1,6 @@
 const db = require('../utils/db');
 const { resolveToken } = require('../utils/tokenMiddleware.js');
+const { getSessionToken } = require('../utils/jwt');
 
 module.exports = app => {
   app.post('/register', (req, res) => {
@@ -9,6 +10,9 @@ module.exports = app => {
       data.users.push(body);
       db.savaData(data);
     }
+    body.token = getSessionToken({
+      id: data.users.findIndex(u => u.username === body.username),
+    });
     res.json(body);
   });
 
@@ -19,13 +23,14 @@ module.exports = app => {
       u => u.username === username && u.password === password
     );
     if (!user) return res.status(403).end();
-    user.token = users.findIndex(u => u.username == username);
+    user.token = getSessionToken({
+      id: users.findIndex(u => u.username === username),
+    });
     res.json(user);
   });
 
   app.get('/me', resolveToken, (req, res) => {
     res.json(req.user);
-    console.log(req);
   });
   return app;
 };

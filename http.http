@@ -1,5 +1,5 @@
-@url  = http://localhost:3000
-
+@url = http://localhost:3000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwiaWF0IjoxNjUwNDk5MDk4fQ.7DSm5fWhddmxHCKWETH8y8EEdcX8Ji2pnXfqwDx2_s8
 
 ### Rrgister
 POST {{url}}/users/register
@@ -11,20 +11,20 @@ content-type: application/json
 ### login
 POST {{url}}/users/login
 content-type: application/json
-token:0
+token: {{token}}
 
 {"username":"salman_mo","password":"123456","name":"salman"}
 
 
 ###Me
 GET {{url}}/users/me
-token: 0
+token: {{token}}
 
 
 ###create posts
 POST {{url}}/posts
 Content-Type: application/json
-token:0
+token: {{token}}
 
 {"title": "created post", "content":"created content"}
 
@@ -32,21 +32,21 @@ token:0
 ###edit posts
 PUT  {{url}}/posts/0
 Content-Type: application/json
-token: 0
+token: {{token}}
 
 {"title": "test post-edit-", "content":"post one-edit-"}
 
 
 ###delete posts
 DELETE {{url}}/posts/0
-token:0
+token: {{token}}
 
 
 ###get posts list
 GET {{url}}/posts
-token:0
+token: {{token}}
 
 
 ###get post by id
 GET {{url}}/posts/0
-token:0
+token: {{token}}
