@@ -1,5 +1,6 @@
 @url = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwiaWF0IjoxNjUwNDk5MDk4fQ.7DSm5fWhddmxHCKWETH8y8EEdcX8Ji2pnXfqwDx2_s8
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjE2NWU1OWM5MTY1MGExMzBlMDk1NiIsImlhdCI6MTY1MDU1MTc4NX0.wYijwaQSPBLXYK7tV5hpcbd6Fw7DTihrh4kiZElaIyM
+@id = 626186c1827576e0378b09fb
 
 ### Rrgister
 POST {{url}}/users/register
@@ -13,7 +14,7 @@ POST {{url}}/users/login
 content-type: application/json
 token: {{token}}
 
-{"username":"salman_mo","password":"123456","name":"salman"}
+{"username":"salman_mo","password":"123456"}
 
 
 ###Me
@@ -30,7 +31,7 @@ token: {{token}}
 
 
 ###edit posts
-PUT  {{url}}/posts/0
+PUT  {{url}}/posts/{{id}}
 Content-Type: application/json
 token: {{token}}
 
@@ -38,7 +39,7 @@ token: {{token}}
 
 
 ###delete posts
-DELETE {{url}}/posts/0
+DELETE {{url}}/posts//{{id}}
 token: {{token}}
 
 
@@ -48,5 +49,5 @@ token: {{token}}
 
 
 ###get post by id
-GET {{url}}/posts/0
+GET {{url}}/posts/{{id}}
 token: {{token}}

@@ -1,46 +1,54 @@
-const db = require('../utils/db.js');
+const ObjectId = require('mongodb').ObjectId;
 
-module.exports = app => {
-  app.post('/', (req, res) => {
+module.exports = (app, db) => {
+  const posts = db.collection('posts');
+  app.post('/', async (req, res) => {
     const { title, content } = req.body;
-    const { user } = req;
-    const data = db.getData();
-    data.posts.push({ title, content, userId: user.id });
-    db.savaData(data);
-    res.json(data.post);
+    const post = await posts.insertOne({ title: title, content: content });
+    res.json({ done: { insertedId: post.insertedId } });
   });
 
-  app.put('/:id', (req, res) => {
+  app.put('/:id', async (req, res) => {
     const { title, content } = req.body;
-    const data = db.getData();
-    const { id } = req.params;
-    const post = data.posts[id];
-    if (!post) return res.status(404), end();
-    if (title) post.title = title;
-    if (content) post.content = content;
-    db.savaData(data);
-    res.status(201).end();
-  });
-
-  app.delete('/:id', (req, res) => {
-    const { id } = req.params;
-    const data = db.getData();
-    const post = data.posts[id];
+    const posts = db.collection('posts');
+    const post = await posts.findOne({
+      _id: ObjectId(req.params),
+    });
     if (!post) return res.status(404).end();
-    data.posts.splice(id, 1);
-    db.savaData(data);
-    res.status(201).end();
+    if (title && content)
+      await posts.updateOne(
+        {
+          _id: ObjectId(req.params.id),
+        },
+        { $set: { title: title, content: content } }
+      );
+    res.status(201).json({ msg: 'successfully edited' });
   });
 
-  app.get('/', (req, res) => {
-    const { posts } = db.getData();
-    res.json(posts);
+  app.delete('/:id', async (req, res) => {
+    const post = await posts.findOne({
+      _id: ObjectId(req.params),
+    });
+    if (!post) return res.status(404).end();
+    await posts.deleteOne({ _id: ObjectId(req.params.id) });
+    res.status(201).json({ delete: 'done' });
   });
 
-  app.get('/:id', (req, res) => {
-    const { id } = req.params;
-    const { posts } = db.getData();
-    const post = posts[id];
+  app.get('/', async (req, res) => {
+    const postsList = await posts
+      .find()
+      .toArray()
+      .then(e => {
+        return e;
+      });
+    res.json({ postsList });
+  });
+
+  app.get('/:id', async (req, res) => {
+    console.log(req.params.id);
+    const post = await posts.findOne({
+      _id: ObjectId(req.params.id),
+    });
     if (!post) return res.status(404).end();
     res.json(post);
   });
