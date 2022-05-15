@@ -1,12 +1,12 @@
 @url = http://localhost:3000
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNjE2NWU1OWM5MTY1MGExMzBlMDk1NiIsImlhdCI6MTY1MDU1MTc4NX0.wYijwaQSPBLXYK7tV5hpcbd6Fw7DTihrh4kiZElaIyM
-@id = 626186c1827576e0378b09fb
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjUyMzAyMTMyfQ.SnMfs8w8BelmEbu_x3gQe0uMr7lThmUBq_jv0ZueiUQ
+@id = 11
 
 ### Rrgister
 POST {{url}}/users/register
 content-type: application/json
 
-{"username":"salman_mo","password":"123456","name":"salman"}
+{"username":"salman_mo", "password":"123456", "name":"salman", "birth":"2001-05-01"}
 
 
 ### login

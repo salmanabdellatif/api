@@ -1,0 +1,41 @@
+for users::
+
+db.createCollection("users", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "username", "password", "name" ],
+         properties: {
+            username: {
+               bsonType: "string"
+            },
+            password: {
+               bsonType: "string"
+            },
+            name: {
+               bsonType: "string"
+            }
+         }
+      }
+   }
+})
+
+
+for posts::
+
+db.createCollection("posts", {
+   validator: {
+      $jsonSchema: {
+         bsonType: "object",
+         required: [ "title", "content" ],
+         properties: {
+            title: {
+               bsonType: "string"
+            },
+            content: {
+               bsonType: "string"
+            }
+         }
+      }
+   }
+})
